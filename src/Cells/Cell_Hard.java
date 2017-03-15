@@ -73,30 +73,30 @@ public class Cell_Hard extends Cell
 
 	private void color1()
 	{
-		if (this.c != Color.white)
+		if (this.c1 != Color.white)
 		{
 			if (this.R == true)
 			{
 				if (this.R != nextGenR)
 				{
-					c = Color.green;
+					c1 = Color.green;
 				} else
 				{
-					c = Color.red;
+					c1 = Color.red;
 				}
 			} else
 			{
 				if (this.R != nextGenR)
 				{
-					c = Color.yellow;
+					c1 = Color.yellow;
 				} else
 				{
-					c = Color.blue;
+					c1 = Color.blue;
 				}
 			}
 		} else
 		{
-			c = Color.white;
+			c1 = Color.white;
 		}
 	}
 
@@ -106,6 +106,6 @@ public class Cell_Hard extends Cell
 		Float tt = (float) (fitness) / t;
 		Float ttt = tt * 250;
 		int tttt = (int) (ttt * 1);
-		c = new Color(tttt, tttt, tttt);
+		c2 = new Color(tttt, tttt, tttt);
 	}
 }

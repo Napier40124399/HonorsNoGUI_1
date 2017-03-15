@@ -125,13 +125,13 @@ public class Cell_TitTat extends Cell
 	{
 		if(type == 1)
 		{
-			c = Color.green;
+			c1 = Color.green;
 		}else if(R == true)
 		{
-			c = Color.red;
+			c1 = Color.red;
 		}else
 		{
-			c = Color.blue;
+			c1 = Color.blue;
 		}
 		this.R = nextGenR;
 		fitness = 0;

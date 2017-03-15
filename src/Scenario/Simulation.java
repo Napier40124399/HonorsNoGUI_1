@@ -21,6 +21,7 @@ public class Simulation implements Runnable
 	private Bridge bridge;
 	private ArrayList<Cell> cells;
 	private SplitTask sp = new SplitTask();
+	private ArrayList<ArrayList<String>> serializeAtEnd = new ArrayList<ArrayList<String>>();
 
 	public Simulation(Bridge bridge)
 	{
@@ -53,6 +54,7 @@ public class Simulation implements Runnable
 				System.out.print("\rGen: "+bridge.getGen());
 			}
 		}
+		serialize();
 		System.out.println("******** Simulation finished ********");
 	}
 
@@ -94,16 +96,20 @@ public class Simulation implements Runnable
 	{
 		if(counter == bridge.getSaveEvery())
 		{
-			serialize();
 			
-			counter = 0;
-		}
-		/*
-		 * BufferedImage img = new BufferedImage(bridge.getCellCount(), bridge.getCellCount(), BufferedImage.TYPE_INT_RGB);
+			ArrayList<String> loc = new ArrayList<String>();
+		    for(Cell c : cells)
+		    {
+		    	loc.add(c.serialize());
+		    }
+		    serializeAtEnd.add(loc);
+
+
+		    BufferedImage img = new BufferedImage(bridge.getCellCount(), bridge.getCellCount(), BufferedImage.TYPE_INT_RGB);
 			Graphics g = img.getGraphics();
 			for(Cell ce : cells)
 			{
-				g.setColor(ce.getColor());
+				g.setColor(ce.getC2());
 				g.drawLine(ce.getX(), ce.getY(), ce.getX(), ce.getY());
 			}
 			try
@@ -113,26 +119,26 @@ public class Simulation implements Runnable
 			} catch (IOException e)
 			{
 			}
-		 */
+			
+			
+			
+			counter = 0;
+		}
 	}
 	
 	private void serialize()
 	{
-		
-		SerializeData sd = new SerializeData(cells);
-		try (ObjectOutputStream oos =
-				new ObjectOutputStream(new FileOutputStream(bridge.getPath()+"\\save_"+bridge.getGen()+".ser")))
+		int iteration = 0;
+		for(ArrayList<String> gen : serializeAtEnd)
 		{
-			//oos.defaultWriteObject();
-
-		    ArrayList<String> loc = new ArrayList<String>();
-		    for(Cell c : cells)
-		    {
-		    	loc.add(c.serialize());
-		    }
-			oos.writeObject(loc);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			try (ObjectOutputStream oos =
+					new ObjectOutputStream(new FileOutputStream(bridge.getPath()+"\\"+iteration)))
+			{
+				oos.writeObject(gen);
+				iteration++;
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 

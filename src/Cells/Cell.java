@@ -263,6 +263,16 @@ public class Cell
 		return R;
 	}
 	
+	public Color getC1()
+	{
+		return c1;
+	}
+	
+	public Color getC2()
+	{
+		return c2;
+	}
+	
 	public Float getOut(Point2D coords)
 	{
 		return new Float(0);
