@@ -4,15 +4,13 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-import DataCenter.Bridge;
-
 /**
  * <h1>Cell - Tit for Tat</h1> This is the cell subclass for TFT cells.
  * Start by cooperating then do whatever your opponent did on the previous iteration.
  * @see {@link Cells.Cellular super class}
  * @see {@link Cells.Cell interface}
  */
-public class Cell_TitTat extends Cellular implements Cell
+public class Cell_TitTat extends Cell
 {
 	private ArrayList<Boolean> memory = new ArrayList<Boolean>();
 	private ArrayList<ArrayList<Boolean>> dimensions = new ArrayList<ArrayList<Boolean>>();

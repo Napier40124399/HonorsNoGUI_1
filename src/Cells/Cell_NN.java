@@ -14,7 +14,7 @@ import NetworkFinal.Remember;
  * @author James Taylor
  *
  */
-public class Cell_NN extends Cellular implements Cell
+public class Cell_NN extends Cell
 {
 	private Network nextGenNet;
 	private Network w;

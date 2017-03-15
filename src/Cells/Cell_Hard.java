@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @see {@link Cells.Cellular super class}
  * @see {@link Cells.Cell interface}
  */
-public class Cell_Hard extends Cellular implements Cell
+public class Cell_Hard extends Cell
 {
 	
 	

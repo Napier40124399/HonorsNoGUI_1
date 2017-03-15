@@ -15,7 +15,7 @@ import NetworkFinal.Remember;
  * @author James Taylor
  *
  */
-public class Cell_NN2 extends Cellular implements Cell, Serializable
+public class Cell_NN2 extends Cell implements Serializable
 {
 	private Network nextGenNet;
 	private Network w;
