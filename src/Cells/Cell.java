@@ -31,7 +31,7 @@ import NetworkFinal.Network;
  * @see Point2D
  * @see Runnable
  */
-public class Cellular
+public class Cell
 {
 	// Changing values
 	// Positions
@@ -44,14 +44,12 @@ public class Cellular
 	protected boolean nextGenR;
 	protected ArrayList<Cell> daddys;
 	// Visuals
-	protected Color c;
+	protected Color c1;
+	protected Color c2;
 	// Stable values
 	protected Bridge bridge;
 	protected ArrayList<Cell> neighboors = new ArrayList<Cell>();
 
-	/**
-	 * @see {@link Cells.Cell#Cell(boolean, int, int, Bridge) Info Here}
-	 */
 	public void Cell(boolean R, int x, int y, Bridge bridge)
 	{
 		this.R = R;
@@ -59,58 +57,15 @@ public class Cellular
 		this.x = x;
 		this.y = y;
 		this.bridge = bridge;
-		if (R)
-		{
-			c = Color.red;
-		} else
-		{
-			c = Color.blue;
-		}
+		c1 = Color.black;
+		c2 = Color.black;
 	}
+	
+	public void setFitness(){}
+	public void setNewGeneration(){}
+	public void updateCell(){}
+	public void mutationLogic(){}
 
-	public void mutationLogic()
-	{
-		int mRate = bridge.getMutation();
-
-	}
-
-	/**
-	 * <h1>Setting Neighboors</h1> Sets current cell's neighboors. This is best
-	 * done in the preperation phase of the simulation since it uses lots of
-	 * ressources. This permits for much faster manipulation of data rather than
-	 * having to find the neighbooring cells every time. <br>
-	 * This algorithm is already relatively efficient. Change at your own risk.
-	 * <p>
-	 * <b>Methods</b>
-	 * <ul>
-	 * <li>{@link Cells.Cellular#notNormal() notNormal()}</li>
-	 * <li>{@link Cells.Cellular#isNormal() isNormal()}</li>
-	 * </ul>
-	 * <p>
-	 * 
-	 * @param distance
-	 *            is set by the user. This allows for a radius of interraction
-	 *            to be created.
-	 * @param neighboors
-	 *            this is an arraylist containing references to cells which are
-	 *            within the radius visitable by the current cell.
-	 * @param size
-	 *            is the size of one side of the lattice. Calulated using the
-	 *            square root of the size of the global cell array.
-	 * @param startX
-	 *            describes the starting point for i to loop on.
-	 * @param endX
-	 *            describes the end point for i to loop on.
-	 * @param startY
-	 *            describes the starting point for j to loop on.
-	 * @param endY
-	 *            describes the end point for j to loop on.
-	 * @param bridge.isTaurus()
-	 *            is an external variable set by the user. This controls whether
-	 *            the lattice is handled as a taurus or not.
-	 * @see Bridge
-	 * @see Math
-	 */
 	public void setNeighboors()
 	{
 		neighboors.clear();
@@ -154,32 +109,6 @@ public class Cellular
 		}
 	}
 
-	/**
-	 * <h1>Neighboor calculations for complex situations</h1> This method
-	 * handles abnormal cellular positions. Situations where a cell is close to
-	 * an edge or may not have a neighboor where one would expect. Additional
-	 * validation is in place as well as a more sophisticated algorithm to
-	 * handle taurus logic.
-	 *
-	 *
-	 * @param startX
-	 *            describes the starting point for i to loop on.
-	 * @param endX
-	 *            describes the end point for i to loop on.
-	 * @param startY
-	 *            describes the starting point for j to loop on.
-	 * @param endY
-	 *            describes the end point for j to loop on.
-	 * @param size
-	 *            is the size of one side of the lattice. Calulated using the
-	 *            square root of the size of the global cell array.
-	 * @param temp
-	 *            is an {@link ArrayList} containing the temporary set of
-	 *            neighboors.
-	 * @param dist
-	 *            is the distance from the {@link Cells.Cellular#setNeighboors()
-	 *            previous method (setNeighboors())}
-	 */
 	private void notNormal(int startX, int startY, int endX, int endY, int size, ArrayList<Cell> temp, int dist)
 	{
 		for (int i = startX; i <= endX; i++)
@@ -245,29 +174,6 @@ public class Cellular
 		}
 	}
 
-	/**
-	 * <h1>Neighboor Calulations</h1> Handles almost all neighboor calculations.
-	 * All cells which don't need to make use of taurus logic will access this
-	 * method. For parameters
-	 *
-	 * @param startX
-	 *            describes the starting point for i to loop on.
-	 * @param endX
-	 *            describes the end point for i to loop on.
-	 * @param startY
-	 *            describes the starting point for j to loop on.
-	 * @param endY
-	 *            describes the end point for j to loop on.
-	 * @param size
-	 *            is the size of one side of the lattice. Calulated using the
-	 *            square root of the size of the global cell array.
-	 * @param temp
-	 *            is an {@link ArrayList} containing the temporary set of
-	 *            neighboors.
-	 * @param dist
-	 *            is the distance from the {@link Cells.Cellular#setNeighboors()
-	 *            previous method (setNeighboors())}
-	 */
 	private void isNormal(int startX, int startY, int endX, int endY, int size, ArrayList<Cell> temp)
 	{
 		for (int i = startX; i <= endX; i++)
@@ -279,19 +185,6 @@ public class Cellular
 		}
 	}
 
-	/**
-	 * <h1>RegulateI</h1> Corrects vertical positioning for taurus use.
-	 *
-	 * @param pos
-	 *            is the value which needs correcting.
-	 * @param size
-	 *            is the same as {@link Cells.Cellular#setNeighboors()
-	 *            setNeighboors'}.
-	 * @param upper
-	 *            defines whether pos exceeds the upper bound or is lower than
-	 *            0.
-	 * @return The corrected value; functional under taurus logic.
-	 */
 	private int regulateI(int pos, int size, boolean upper)
 	{
 		int over = 0;
@@ -305,19 +198,6 @@ public class Cellular
 		return over;
 	}
 
-	/**
-	 * <h1>RegulateJ</h1> Corrects vertical positioning for taurus use.
-	 *
-	 * @param pos
-	 *            is the value which needs correcting.
-	 * @param size
-	 *            is the same as {@link Cells.Cellular#setNeighboors()
-	 *            setNeighboors'}.
-	 * @param upper
-	 *            defines whether pos exceeds the upper bound or is lower than
-	 *            0.
-	 * @return The corrected value; functional under taurus logic.
-	 */
 	private int regulateJ(int pos, int size, boolean upper)
 	{
 		int over = 0;
@@ -371,16 +251,6 @@ public class Cellular
 	public int getY()
 	{
 		return (int) coords.getY();
-	}
-
-	public void setColor(Color co)
-	{
-		c = co;
-	}
-
-	public Color getColor()
-	{
-		return c;
 	}
 
 	public boolean getR()
@@ -442,4 +312,6 @@ public class Cellular
 	{
 		
 	}
+	
+	public String serialize(){return null;}
 }

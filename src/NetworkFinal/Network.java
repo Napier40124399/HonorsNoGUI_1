@@ -70,22 +70,30 @@ public class Network implements Cloneable, Serializable
 		fabric.add(parts);
 
 		addLayer();
+		/*
 		for (int i = 0; i < size-1; i++)
 		{
 			addNode(1);
 		}
+		*/
 		addLayer();
-
+	}
+	
+	public void makeDefect()
+	{
+		
 	}
 
-	public void mutate()
+	public void mutate(int mutate)
 	{
+		Float mutation = new Float(mutate);
+		mutation = mutation * 0.01f;
 		// All initialized the same way, this is the difference
 		for (ArrayList<Part> layer : fabric)
 		{
 			for (Part p : layer)
 			{
-				p.mutate();
+				p.mutate(mutation);
 				//p.makeCoop();
 			}
 		}
@@ -106,12 +114,12 @@ public class Network implements Cloneable, Serializable
 			}
 		}
 		
-		if(Math.random() > 0.999)
+		if(Math.random() > 0.995)
 		{
 			if(fabric.get(fabric.size()-2).size() < 15)
 			{
 				addNode(fabric.size()-2);
-			}else
+			}else 
 			{
 				addLayer();
 			}
@@ -171,6 +179,28 @@ public class Network implements Cloneable, Serializable
 			return null;
 		} catch (ClassNotFoundException e) {
 			return null;
+		}
+	}
+	
+	public void output()
+	{
+		System.out.println("Fabric size: "+fabric.size());
+		for(ArrayList<Part> layer : fabric)
+		{
+			System.out.println("Layer size: "+layer.size());
+		}
+		System.out.println("===== Biases =====");
+		for(Float f : biases)
+		{
+			System.out.println(f);
+		}
+		for(ArrayList<Part> level : fabric)
+		{
+			System.out.println("=== Weights ===");
+			for(Part p : level)
+			{
+				p.showCon();
+			}
 		}
 	}
 }

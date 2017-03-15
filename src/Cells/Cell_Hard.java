@@ -11,8 +11,6 @@ import java.util.ArrayList;
  */
 public class Cell_Hard extends Cell
 {
-	
-	
 	@Override
 	public void setFitness()
 	{

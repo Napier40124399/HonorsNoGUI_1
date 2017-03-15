@@ -15,23 +15,24 @@ import NetworkFinal.Remember;
  * @author James Taylor
  *
  */
-public class Cell_NN2 extends Cell implements Serializable
+public class Cell_NN2 extends Cell
 {
 	private Network nextGenNet;
 	private Network w;
 	private Remember memory;;
 	private Float accepted = 0f;
 	private Float total = 0f;
-	
-	@Override
-	public Point2D getCoords()
+	private int cooped = 0;
+
+	public Cell_NN2()
 	{
-		return coords;
+		w = new Network(10);
 	}
 
 	@Override
 	public void setFitness()
 	{
+		cooped = 0;
 		for (Cell ce : neighboors)
 		{
 			memory.reset();
@@ -48,6 +49,7 @@ public class Cell_NN2 extends Cell implements Serializable
 				ce.handleMemory(decisionOP, decisionME);
 				Float te = (-0.75f * decisionME) + (1.75f * decisionOP) + 2.5f;
 				
+				if(decisionME > 0){cooped+=1;}
 				fitness += te;
 			}
 		}
@@ -85,14 +87,8 @@ public class Cell_NN2 extends Cell implements Serializable
 	@Override
 	public void updateCell()
 	{
-		accepted = new Float(fitness);
-		total = new Float(neighboors.size());
-		Float tt = accepted / total;
-		Float temp = (tt / 5f) / bridge.getItPerGen();
-		Float fff = 250 * temp;
-		int iii = (int) (fff * 1);
-
-		c = new Color(iii, iii, iii);
+		color1();
+		color2();
 		
 		if(!nextGenNet.equals(null))
 		{
@@ -104,12 +100,33 @@ public class Cell_NN2 extends Cell implements Serializable
 		
 		fitness = 0;
 	}
+	
+	private void color1()
+	{
+		accepted = new Float(fitness);
+		total = new Float(neighboors.size());
+		Float tt = accepted / total;
+		Float temp = (tt / 5f) / bridge.getItPerGen();
+		Float fff = 250 * temp;
+		int iii = (int) (fff * 1);
+
+		c1 = new Color(iii, iii, iii);
+	}
+	
+	private void color2()
+	{
+		Float nei = new Float(neighboors.size() * bridge.getItPerGen());
+		nei = 255 * (new Float(cooped) / nei);
+		int iii = (int) (nei * 1);
+		
+		c2 = new Color(iii,iii,iii);
+	}
 
 	@Override
 	public void mutationLogic()
 	{
 		// More to come!!
-		w.mutate();
+		w.mutate(bridge.getMutation());
 	}
 	
 	@Override
@@ -151,6 +168,28 @@ public class Cell_NN2 extends Cell implements Serializable
 	{
 		super.setNeighboors();
 		memory = new Remember(3);
-		w = new Network(bridge.getNodes());
+	}
+	
+	private void Output()
+	{
+		
+	}
+	
+	@Override
+	public void manage(int i)
+	{
+		w.output();
+	}
+	
+	@Override
+	public String serialize()
+	{
+		String output = "";
+		output = output + c1.getRed()+"/";
+		output = output + c2.getRed()+"/";
+		output = output + this.x + "/";
+		output = output + this.y + "*";
+		
+		return null;
 	}
 }

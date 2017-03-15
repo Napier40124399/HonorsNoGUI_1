@@ -1,9 +1,8 @@
 package NetworkFinal;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Remember implements Serializable
+public class Remember
 {
 	private ArrayList<Float> memory = new ArrayList<Float>();
 	private ArrayList<Float> memCur = new ArrayList<Float>();

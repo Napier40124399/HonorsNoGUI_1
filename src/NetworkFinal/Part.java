@@ -48,14 +48,14 @@ public class Part implements Serializable
 		weights.add(new Float(r.nextGaussian() / 2));
 	}
 
-	public void mutate()
+	public void mutate(Float mute)
 	{
 		for (int i = 0; i < weights.size(); i++)
 		{
-			weights.set(i, mutate(i));
-			if(weights.get(i) > 0.5f || weights.get(i) < -0.5f)
+			weights.set(i, mutate(i, mute));
+			if(weights.get(i) > 0.5 || weights.get(i) < -0.5)
 			{
-				weights.set(i, (weights.get(i) * 0.8f));
+				weights.set(i, (weights.get(i) * 0.9f));
 			}
 		}
 	}
@@ -72,6 +72,7 @@ public class Part implements Serializable
 	{
 
 		Float tel = new Float(2 * (Math.pow((1 + Math.exp(-input)), -1) - 0.5));
+		
 		input = tel;
 	}
 
@@ -93,10 +94,10 @@ public class Part implements Serializable
 		}
 	}
 
-	private Float mutate(int i)
+	private Float mutate(int i, Float mutate)
 	{
 		Random r = new Random();
-		Float tt = new Float(r.nextGaussian() * 0.1);
+		Float tt = new Float(r.nextGaussian() * mutate);
 		return weights.get(i) + tt;
 	}
 
@@ -127,6 +128,15 @@ public class Part implements Serializable
 		} catch (ClassNotFoundException e)
 		{
 			return null;
+		}
+	}
+	
+	public void showCon()
+	{
+		System.out.println("= Cons =");
+		for(Float f : weights)
+		{
+			System.out.println(f);
 		}
 	}
 }

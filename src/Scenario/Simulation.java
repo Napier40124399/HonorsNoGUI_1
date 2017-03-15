@@ -94,8 +94,12 @@ public class Simulation implements Runnable
 	{
 		if(counter == bridge.getSaveEvery())
 		{
-			//serialize();
-			BufferedImage img = new BufferedImage(bridge.getCellCount(), bridge.getCellCount(), BufferedImage.TYPE_INT_RGB);
+			serialize();
+			
+			counter = 0;
+		}
+		/*
+		 * BufferedImage img = new BufferedImage(bridge.getCellCount(), bridge.getCellCount(), BufferedImage.TYPE_INT_RGB);
 			Graphics g = img.getGraphics();
 			for(Cell ce : cells)
 			{
@@ -109,8 +113,7 @@ public class Simulation implements Runnable
 			} catch (IOException e)
 			{
 			}
-			counter = 0;
-		}
+		 */
 	}
 	
 	private void serialize()
@@ -125,19 +128,12 @@ public class Simulation implements Runnable
 		    List loc = new ArrayList();
 		    for(Cell c : cells)
 		    {
-		    	loc.add(getVal(c));
+		    	loc.add(c.serialize());
 		    }
 			oos.writeObject(loc);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	}
-	
-	private String getVal(Cell c)
-	{
-		String col1 = c.getColor().getBlue()+"";
-		
-		return "";
 	}
 
 	public void setCells()
