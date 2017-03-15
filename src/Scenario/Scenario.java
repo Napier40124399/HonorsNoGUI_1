@@ -26,7 +26,8 @@ public class Scenario
 		bridge.setCores(Integer.parseInt(settings.get(8)));
 		bridge.setRunning(true);
 		bridge.setNodes(Integer.parseInt(settings.get(9)));
-		bridge.setPath(settings.get(10));
+		bridge.setMutation(Integer.parseInt(settings.get(10)));
+		bridge.setPath(settings.get(11));
 		
 		t = new Thread(new Simulation(bridge));
 		t.start();

@@ -87,7 +87,7 @@ public class Network implements Cloneable, Serializable
 	public void mutate(int mutate)
 	{
 		Float mutation = new Float(mutate);
-		mutation = mutation * 0.01f;
+		mutation = mutation * 0.001f;
 		// All initialized the same way, this is the difference
 		for (ArrayList<Part> layer : fabric)
 		{

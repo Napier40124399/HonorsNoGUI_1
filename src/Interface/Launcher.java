@@ -78,6 +78,8 @@ public class Launcher
 		settings.add(scanner.nextLine());
 		System.out.println("How many nodes?");
 		settings.add(scanner.nextLine());
+		System.out.println("Mutation on connection weights\n(will be multiplied by 0.001):");
+		settings.add(scanner.nextLine());
 		System.out.println("1) Run\n2) Save\n3) Save & Run");
 		String t = scanner.nextLine();
 		if (t.equals("1"))
@@ -238,6 +240,7 @@ public class Launcher
 
 		System.out.println("8. Threads: "+settings.get(8));
 		System.out.println("9. Nodes: "+settings.get(9));
+		System.out.println("10. Mutation: "+settings.get(10));
 		System.out.println("********** END OF READING **********");
 	}
 
