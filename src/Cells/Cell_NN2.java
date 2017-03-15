@@ -188,8 +188,9 @@ public class Cell_NN2 extends Cell
 		output = output + c1.getRed()+"/";
 		output = output + c2.getRed()+"/";
 		output = output + this.x + "/";
-		output = output + this.y + "*";
+		output = output + this.y + "/";
+		output = output + w.getTop();
 		
-		return null;
+		return output;
 	}
 }

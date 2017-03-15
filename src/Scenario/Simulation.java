@@ -125,7 +125,7 @@ public class Simulation implements Runnable
 		{
 			//oos.defaultWriteObject();
 
-		    List loc = new ArrayList();
+		    ArrayList<String> loc = new ArrayList<String>();
 		    for(Cell c : cells)
 		    {
 		    	loc.add(c.serialize());

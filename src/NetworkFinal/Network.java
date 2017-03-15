@@ -182,6 +182,18 @@ public class Network implements Cloneable, Serializable
 		}
 	}
 	
+	public String getTop()
+	{
+		String temp = "";
+		
+		for(ArrayList<Part> layer : fabric)
+		{
+			temp = temp + layer.size() + "-";
+		}
+		
+		return temp;
+	}
+	
 	public void output()
 	{
 		System.out.println("Fabric size: "+fabric.size());
