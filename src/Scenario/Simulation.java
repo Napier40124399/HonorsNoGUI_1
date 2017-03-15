@@ -96,49 +96,24 @@ public class Simulation implements Runnable
 	{
 		if(counter == bridge.getSaveEvery())
 		{
-			
-			ArrayList<String> loc = new ArrayList<String>();
-		    for(Cell c : cells)
-		    {
-		    	loc.add(c.serialize());
-		    }
-		    serializeAtEnd.add(loc);
-
-
-		    BufferedImage img = new BufferedImage(bridge.getCellCount(), bridge.getCellCount(), BufferedImage.TYPE_INT_RGB);
-			Graphics g = img.getGraphics();
-			for(Cell ce : cells)
-			{
-				g.setColor(ce.getC2());
-				g.drawLine(ce.getX(), ce.getY(), ce.getX(), ce.getY());
-			}
-			try
-			{
-				File outputfile = new File(bridge.getPath()+"\\save_"+bridge.getGen()+".png");
-				ImageIO.write(img, "png", outputfile);
-			} catch (IOException e)
-			{
-			}
-			
-			
-			
+			serialize();
 			counter = 0;
 		}
 	}
 	
 	private void serialize()
 	{
-		int iteration = 0;
-		for(ArrayList<String> gen : serializeAtEnd)
+		try (ObjectOutputStream oos =
+				new ObjectOutputStream(new FileOutputStream(bridge.getPath()+"\\"+bridge.getGen())))
 		{
-			try (ObjectOutputStream oos =
-					new ObjectOutputStream(new FileOutputStream(bridge.getPath()+"\\"+iteration)))
-			{
-				oos.writeObject(gen);
-				iteration++;
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			ArrayList<String> loc = new ArrayList<String>();
+		    for(Cell c : cells)
+		    {
+		    	loc.add(c.serialize());
+		    }
+			oos.writeObject(loc);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
